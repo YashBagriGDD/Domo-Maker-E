@@ -37,79 +37,115 @@ var handleSignup = function handleSignup(e) {
 };
 
 var LoginWindow = function LoginWindow(props) {
-  return (/*#__PURE__*/React.createElement("form", {
-      id: "loginForm",
-      name: "loginForm",
-      onSubmit: handleLogin,
-      action: "/login",
-      method: "POST",
-      className: "mainForm"
-    }, /*#__PURE__*/React.createElement("label", {
-      htmlFor: "username"
-    }, "Username: "), /*#__PURE__*/React.createElement("input", {
-      id: "user",
-      type: "text",
-      name: "username",
-      placeholder: "username"
-    }), /*#__PURE__*/React.createElement("label", {
-      htmlFor: "pass"
-    }, "Password: "), /*#__PURE__*/React.createElement("input", {
-      id: "pass",
-      type: "password",
-      name: "pass",
-      placeholder: "password"
-    }), /*#__PURE__*/React.createElement("input", {
-      type: "hidden",
-      name: "_csrf",
-      value: props.csrf
-    }), /*#__PURE__*/React.createElement("input", {
-      className: "formSubmit",
-      type: "submit",
-      value: "Sign in"
-    }))
-  );
+  return /*#__PURE__*/React.createElement("form", {
+    id: "loginForm",
+    name: "loginForm",
+    onSubmit: handleLogin,
+    action: "/login",
+    method: "POST",
+    className: "mainForm"
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "username"
+  }, "Username: "), /*#__PURE__*/React.createElement("input", {
+    id: "user",
+    type: "text",
+    name: "username",
+    placeholder: "username"
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "pass"
+  }, "Password: "), /*#__PURE__*/React.createElement("input", {
+    id: "pass",
+    type: "password",
+    name: "pass",
+    placeholder: "password"
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: "_csrf",
+    value: props.csrf
+  }), /*#__PURE__*/React.createElement("input", {
+    className: "formSubmit",
+    type: "submit",
+    value: "Sign in"
+  }));
 };
 
 var SignupWindow = function SignupWindow(props) {
-  return (/*#__PURE__*/React.createElement("form", {
-      id: "signupForm",
-      name: "signupForm",
-      onSubmit: handleSignup,
-      action: "/signup",
-      method: "POST",
-      className: "mainForm"
-    }, /*#__PURE__*/React.createElement("label", {
-      htmlFor: "username"
-    }, "Username: "), /*#__PURE__*/React.createElement("input", {
-      id: "user",
-      type: "text",
-      name: "username",
-      placeholder: "username"
-    }), /*#__PURE__*/React.createElement("label", {
-      htmlFor: "pass"
-    }, "Password: "), /*#__PURE__*/React.createElement("input", {
-      id: "pass",
-      type: "password",
-      name: "pass",
-      placeholder: "password"
-    }), /*#__PURE__*/React.createElement("label", {
-      htmlFor: "pass2"
-    }, "Password: "), /*#__PURE__*/React.createElement("input", {
-      id: "pass2",
-      type: "password",
-      name: "pass2",
-      placeholder: "retype password"
-    }), /*#__PURE__*/React.createElement("input", {
-      type: "hidden",
-      name: "_csrf",
-      value: props.csrf
-    }), /*#__PURE__*/React.createElement("input", {
-      className: "formSubmit",
-      type: "submit",
-      value: "Sign Up"
-    }))
-  );
+  return /*#__PURE__*/React.createElement("form", {
+    id: "signupForm",
+    name: "signupForm",
+    onSubmit: handleSignup,
+    action: "/signup",
+    method: "POST",
+    className: "mainForm"
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "username"
+  }, "Username: "), /*#__PURE__*/React.createElement("input", {
+    id: "user",
+    type: "text",
+    name: "username",
+    placeholder: "username"
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "pass"
+  }, "Password: "), /*#__PURE__*/React.createElement("input", {
+    id: "pass",
+    type: "password",
+    name: "pass",
+    placeholder: "password"
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "pass2"
+  }, "Password: "), /*#__PURE__*/React.createElement("input", {
+    id: "pass2",
+    type: "password",
+    name: "pass2",
+    placeholder: "retype password"
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: "_csrf",
+    value: props.csrf
+  }), /*#__PURE__*/React.createElement("input", {
+    className: "formSubmit",
+    type: "submit",
+    value: "Sign Up"
+  }));
+}; //#region Home Domo Code
+
+
+var DomoList = function DomoList(props) {
+  if (props.domos.length === 0) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "domoList"
+    }, /*#__PURE__*/React.createElement("h3", {
+      className: "emptyDomo"
+    }, "No Domos Yet"));
+  }
+
+  var domoNodes = props.domos.map(function (domo) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: domo._id,
+      className: "domo"
+    }, /*#__PURE__*/React.createElement("img", {
+      src: "/assets/img/domoface.jpeg",
+      alt: "domo face",
+      className: "domoFace"
+    }), /*#__PURE__*/React.createElement("h3", {
+      className: "domoName"
+    }, "Name: ", domo.name, " "), /*#__PURE__*/React.createElement("h3", {
+      className: "domoAge"
+    }, "Age: ", domo.age));
+  });
+  return /*#__PURE__*/React.createElement("div", {
+    className: "domoList"
+  }, domoNodes);
 };
+
+var loadDomosFromServer = function loadDomosFromServer() {
+  sendAjax('GET', '/getAllDomos', null, function (data) {
+    ReactDOM.render( /*#__PURE__*/React.createElement(DomoList, {
+      domos: data.domos
+    }), document.querySelector("#content"));
+  });
+}; //#endregion
+
 
 var createLoginWindow = function createLoginWindow(csrf) {
   ReactDOM.render( /*#__PURE__*/React.createElement(LoginWindow, {
@@ -136,7 +172,8 @@ var setup = function setup(csrf) {
     createLoginWindow(csrf);
     return false;
   });
-  createLoginWindow(csrf); //Default window
+  loadDomosFromServer(); //Default window
+  //Default loads all domos on the server 
 };
 
 var getToken = function getToken() {
