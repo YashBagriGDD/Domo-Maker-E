@@ -69,7 +69,25 @@ const getAllDomos = (request, response) => {
   });
 };
 
+const deleteEntry = (request, response) => {
+  const req = request;
+  const res = response;
+  const search = {
+    _id: req._id,
+  };
+
+  Domo.DomoModel.deleteOne(search, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occured' });
+    }
+
+    return res.json({ result: docs });
+  });
+};
+
 module.exports.makerPage = makerPage;
 module.exports.getDomos = getDomos;
 module.exports.getAllDomos = getAllDomos;
 module.exports.make = makeDomo;
+module.exports.delete = deleteEntry;

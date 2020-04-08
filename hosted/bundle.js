@@ -18,6 +18,14 @@ var handleDomo = function handleDomo(e) {
   return false;
 };
 
+var handleDelete = function handleDelete(e, uid) {
+  e.preventDefault();
+  sendAjax('POST', '/delete', uid, function () {
+    loadDomosFromServer();
+  });
+  return false;
+};
+
 var DomoForm = function DomoForm(props) {
   return /*#__PURE__*/React.createElement("form", {
     id: "domoForm",
@@ -72,7 +80,11 @@ var DomoList = function DomoList(props) {
       className: "domoName"
     }, "Name: ", domo.name, " "), /*#__PURE__*/React.createElement("h3", {
       className: "domoAge"
-    }, "Age: ", domo.age), /*#__PURE__*/React.createElement("h3", null, " ", domo._id, " "));
+    }, "Age: ", domo.age), /*#__PURE__*/React.createElement("button", {
+      onclick: function onclick(e) {
+        return handleDelete(e, domo._id);
+      }
+    }, "Delete Item"));
   });
   return /*#__PURE__*/React.createElement("div", {
     className: "domoList"
