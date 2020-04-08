@@ -108,6 +108,8 @@ const loadAllDomosFromServer = () => {
             <DomoList domos={data.domos} />, document.querySelector("#domos")
         );
     });
+
+    ReactDOM.unmountComponentAtNode(document.querySelector("#content"));
 };
 //#endregion
 
@@ -116,6 +118,8 @@ const createLoginWindow = (csrf) => {
         <LoginWindow csrf={csrf} />,
         document.querySelector("#content")
     );
+
+    ReactDOM.unmountComponentAtNode(document.querySelector("#domos"));
 };
 
 const createSignupWindow = (csrf) => {
@@ -123,6 +127,8 @@ const createSignupWindow = (csrf) => {
         <SignupWindow csrf={csrf} />,
         document.querySelector("#content")
     );
+
+    ReactDOM.unmountComponentAtNode(document.querySelector("#domos"));
 };
 
 const setup = (csrf) => {
