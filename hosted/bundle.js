@@ -85,15 +85,36 @@ var loadDomosFromServer = function loadDomosFromServer() {
       domos: data.domos
     }), document.querySelector("#domos"));
   });
+}; // Display all domos for home page
+
+
+var loadAllDomosFromServer = function loadAllDomosFromServer() {
+  sendAjax('GET', '/getAllDomos', null, function (data) {
+    ReactDOM.render( /*#__PURE__*/React.createElement(DomoList, {
+      domos: data.domos
+    }), document.querySelector("#domos"));
+  });
 };
 
 var setup = function setup(csrf) {
+  var homeButton = document.querySelector("#home");
+  var pageButton = document.querySelector("#myPage");
   ReactDOM.render( /*#__PURE__*/React.createElement(DomoForm, {
     csrf: csrf
   }), document.querySelector("#makeDomo"));
   ReactDOM.render( /*#__PURE__*/React.createElement(DomoList, {
     domos: []
   }), document.querySelector("#domos"));
+  homeButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    loadAllDomosFromServer();
+    return false;
+  });
+  pageButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    loadDomosFromServer();
+    return false;
+  });
   loadDomosFromServer();
 };
 

@@ -128,6 +128,7 @@ const createSignupWindow = (csrf) => {
 const setup = (csrf) => {
     const loginButton = document.querySelector("#loginButton");
     const signupButton = document.querySelector("#signupButton");
+    const homeButton = document.querySelector("#home");
 
     signupButton.addEventListener("click", (e) => {
         e.preventDefault();
@@ -141,7 +142,7 @@ const setup = (csrf) => {
         return false;
     });
 
-    $("#home").addEventListener("click", (e) => {
+    homeButton.addEventListener("click", (e) => {
         e.preventDefault();
         loadAllDomosFromServer();
         return false;

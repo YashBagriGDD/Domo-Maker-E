@@ -81,6 +81,9 @@ const loadAllDomosFromServer = () => {
 };
 
 const setup = function(csrf) {
+    const homeButton = document.querySelector("#home");
+    const pageButton = document.querySelector("#myPage");
+
     ReactDOM.render(
         <DomoForm csrf={csrf}/>, document.querySelector("#makeDomo")
     );
@@ -89,13 +92,13 @@ const setup = function(csrf) {
         <DomoList domos={[]} />, document.querySelector("#domos")
     );
 
-    $("#home").addEventListener("click", (e) => {
+    homeButton.addEventListener("click", (e) => {
         e.preventDefault();
         loadAllDomosFromServer();
         return false;
     });
 
-    $("#myPage").addEventListener("click", (e) => {
+    pageButton.addEventListener("click", (e) => {
         e.preventDefault();
         loadDomosFromServer();
         return false;

@@ -138,11 +138,11 @@ var DomoList = function DomoList(props) {
   }, domoNodes);
 };
 
-var loadDomosFromServer = function loadDomosFromServer() {
+var loadAllDomosFromServer = function loadAllDomosFromServer() {
   sendAjax('GET', '/getAllDomos', null, function (data) {
     ReactDOM.render( /*#__PURE__*/React.createElement(DomoList, {
       domos: data.domos
-    }), document.querySelector("#content"));
+    }), document.querySelector("#domos"));
   });
 }; //#endregion
 
@@ -162,6 +162,7 @@ var createSignupWindow = function createSignupWindow(csrf) {
 var setup = function setup(csrf) {
   var loginButton = document.querySelector("#loginButton");
   var signupButton = document.querySelector("#signupButton");
+  var homeButton = document.querySelector("#home");
   signupButton.addEventListener("click", function (e) {
     e.preventDefault();
     createSignupWindow(csrf);
@@ -172,7 +173,12 @@ var setup = function setup(csrf) {
     createLoginWindow(csrf);
     return false;
   });
-  loadDomosFromServer(); //Default window
+  homeButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    loadAllDomosFromServer();
+    return false;
+  });
+  loadAllDomosFromServer(); //Default window
   //Default loads all domos on the server 
 };
 
