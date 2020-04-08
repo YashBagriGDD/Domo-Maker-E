@@ -56,6 +56,20 @@ const getDomos = (request, response) => {
   });
 };
 
+const getAllDomos = (request, response) => {
+  const res = response;
+
+  return Domo.DomoModel.findAll((err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occured' });
+    }
+
+    return res.json({ domos: docs });
+  });
+};
+
 module.exports.makerPage = makerPage;
 module.exports.getDomos = getDomos;
+module.exports.getAllDomos = getAllDomos;
 module.exports.make = makeDomo;
