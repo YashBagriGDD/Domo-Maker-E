@@ -81,8 +81,9 @@ var DomoList = function DomoList(props) {
     }, "Name: ", domo.name, " "), /*#__PURE__*/React.createElement("h3", {
       className: "domoAge"
     }, "Age: ", domo.age), /*#__PURE__*/React.createElement("button", {
+      value: domo._id,
       onclick: function onclick(e) {
-        return handleDelete(e, domo._id);
+        return handleDelete(e, e.target.value);
       }
     }, "Delete Item"));
   });
