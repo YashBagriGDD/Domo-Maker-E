@@ -71,6 +71,15 @@ const loadDomosFromServer = () => {
     });
 };
 
+// Display all domos for home page
+const loadAllDomosFromServer = () => {
+    sendAjax('GET', '/getAllDomos', null, (data) => {
+        ReactDOM.render(
+            <DomoList domos={data.domos} />, document.querySelector("#domos")
+        );
+    });
+};
+
 const setup = function(csrf) {
     ReactDOM.render(
         <DomoForm csrf={csrf}/>, document.querySelector("#makeDomo")
