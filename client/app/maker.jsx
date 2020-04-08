@@ -80,6 +80,18 @@ const setup = function(csrf) {
         <DomoList domos={[]} />, document.querySelector("#domos")
     );
 
+    $("#home").addEventListener("click", (e) => {
+        e.preventDefault();
+        loadAllDomosFromServer();
+        return false;
+    });
+
+    $("#myPage").addEventListener("click", (e) => {
+        e.preventDefault();
+        loadDomosFromServer();
+        return false;
+    })
+
     loadDomosFromServer();
 };
 

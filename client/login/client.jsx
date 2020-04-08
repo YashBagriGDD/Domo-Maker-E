@@ -102,10 +102,10 @@ const DomoList = function(props) {
     );
 };
 
-const loadDomosFromServer = () => {
+const loadAllDomosFromServer = () => {
     sendAjax('GET', '/getAllDomos', null, (data) => {
         ReactDOM.render(
-            <DomoList domos={data.domos} />, document.querySelector("#content")
+            <DomoList domos={data.domos} />, document.querySelector("#domos")
         );
     });
 };
@@ -141,7 +141,13 @@ const setup = (csrf) => {
         return false;
     });
 
-    loadDomosFromServer() //Default window
+    $("#home").addEventListener("click", (e) => {
+        e.preventDefault();
+        loadAllDomosFromServer();
+        return false;
+    });
+
+    loadAllDomosFromServer() //Default window
     //Default loads all domos on the server 
 };
 
