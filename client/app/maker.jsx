@@ -1,3 +1,6 @@
+//At the top of the file
+let _csrf;
+
 const handleDomo = (e) => {
     e.preventDefault();
 
@@ -17,13 +20,18 @@ const handleDomo = (e) => {
     return false;
 };
 
-const handleDelete = (e, uid) => {
+const handleDelete = (e) => {
     e.preventDefault();
-
-    sendAjax('POST', '/delete', uid, function() { loadDomosFromServer(); });
-
+  
+    let data = {
+      uid: e.target.value,
+      _csrf
+    }
+  
+    sendAjax('POST', '/delete', data, function () {loadDomosFromServer();});
+  
     return false;
-}
+  }
 
 const DomoForm = (props) => {
     return ( 
@@ -60,7 +68,7 @@ const DomoList = function(props) {
                 <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace"/>
                 <h3 className="domoName">Name: {domo.name} </h3>
                 <h3 className="domoAge">Age: {domo.age}</h3>
-                <button value={domo._id} onclick={(e) => handleDelete(e, e.target.value)}>Delete Item</button>
+                <button value={domo._id} onClick={handleDelete}>Delete Item</button>
             </div>
         );
     });
@@ -116,8 +124,10 @@ const setup = function(csrf) {
     loadDomosFromServer();
 };
 
+//And set it in getToken
 const getToken = () => {
     sendAjax('GET', '/getToken', null, (result) => {
+      _csrf = result.csrfToken;
         setup(result.csrfToken);
     });
 };

@@ -1,5 +1,8 @@
 "use strict";
 
+//At the top of the file
+var _csrf;
+
 var handleDomo = function handleDomo(e) {
   e.preventDefault();
   $("#domoMessage").animate({
@@ -18,9 +21,13 @@ var handleDomo = function handleDomo(e) {
   return false;
 };
 
-var handleDelete = function handleDelete(e, uid) {
+var handleDelete = function handleDelete(e) {
   e.preventDefault();
-  sendAjax('POST', '/delete', uid, function () {
+  var data = {
+    uid: e.target.value,
+    _csrf: _csrf
+  };
+  sendAjax('POST', '/delete', data, function () {
     loadDomosFromServer();
   });
   return false;
@@ -82,9 +89,7 @@ var DomoList = function DomoList(props) {
       className: "domoAge"
     }, "Age: ", domo.age), /*#__PURE__*/React.createElement("button", {
       value: domo._id,
-      onclick: function onclick(e) {
-        return handleDelete(e, e.target.value);
-      }
+      onClick: handleDelete
     }, "Delete Item"));
   });
   return /*#__PURE__*/React.createElement("div", {
@@ -129,10 +134,12 @@ var setup = function setup(csrf) {
     return false;
   });
   loadDomosFromServer();
-};
+}; //And set it in getToken
+
 
 var getToken = function getToken() {
   sendAjax('GET', '/getToken', null, function (result) {
+    _csrf = result.csrfToken;
     setup(result.csrfToken);
   });
 };
