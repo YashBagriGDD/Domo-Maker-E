@@ -53,10 +53,10 @@ DomoSchema.statics.findByOwner = (ownerId, callback) => {
     owner: convertId(ownerId),
   };
 
-  return DomoModel.find(search).select('name age').lean().exec(callback);
+  return DomoModel.find(search).select('name age level').lean().exec(callback);
 };
 
-DomoSchema.statics.findAll = (callback) => DomoModel.find().select('name age').lean().exec(callback);
+DomoSchema.statics.findAll = (callback) => DomoModel.find().select('name age level').lean().exec(callback);
 
 DomoSchema.statics.deleteItem = (uid, callback) => {
   const search = {
